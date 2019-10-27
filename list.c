@@ -1,31 +1,30 @@
-struct node { int i; struct node *next; };
+#include <stdio.h>
+#include <stdlib.h>
+#include "headers.h"
 
 //Should take a pointer to a node struct and print out all of the data in the list
 void print_list(struct node * current){
-  int sizeList = sizeof(current);
-  int i = 0;
   printf("Let's print some data!\n");
   if (current == NULL){
     printf("Printing empty list: []\n");
   }
   else{
-    printf("Printing list: [\n");
-    for(i < sizeList; i++){
-      printf("%d", current->i);
-      printf("\n");
+    printf("Printing list: [");
+    while(current->next != NULL){
+      printf("%d, ", current->i);
       current = current->next;
     }
+      printf("]\n");
   }
-  printf("]\n");
 }
 // Should take a pointer to the existing list and the data to be added, create a new node and put it at the beginning of the list.
 // The second argument should match whatever data you contain in your nodes.
 // Returns a pointer to the beginning of the list.
 
 struct node * insert_front(struct node * current, int x){
-  struct node toAdd;
+  struct node * toAdd = (struct node *)malloc(sizeof(struct node));
   toAdd->i = x;
-  toAdd->*next = current;
+  toAdd->next = current;
   return toAdd;
 }
 
