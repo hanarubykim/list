@@ -17,10 +17,10 @@ void print_list(struct node * current){
       printf("]\n");
   }
 }
+
 // Should take a pointer to the existing list and the data to be added, create a new node and put it at the beginning of the list.
 // The second argument should match whatever data you contain in your nodes.
 // Returns a pointer to the beginning of the list.
-
 struct node * insert_front(struct node * current, int x){
   struct node * toAdd = (struct node *)malloc(sizeof(struct node));
   toAdd->i = x;
@@ -37,8 +37,38 @@ struct node * free_list(struct node * begin){
     printf("Everything's been freed. \n");
   }
   else{
-    printf("Freed: %d", begin->i);
+    printf("Freed: %d\n", begin->i);
     current = begin->next;
     return free_list(current);
   }
+  return current;
+}
+
+// Remove the node containing data from the list pointed to by front.
+// If data is not in the list, nothing is changed.
+// Returns a pointer to the beginning of the list.
+
+struct node * remove_node(struct node *front, int data){
+  struct node * tempFront = front;
+  struct node * tempPrevious = front;
+
+  if(front->i == data){
+    tempFront = front->next;
+    free(front);
+    return tempFront;
+  }
+  else{
+    front = front->next;
+  }
+  while(front->next != NULL){
+    if(front->i == data){
+      tempPrevious->next = front->next;
+      free(front);
+      front = NULL;
+      return tempFront;
+    }
+    tempPrevious = front;
+    front = front->next;
+  }
+  return tempFront;
 }
